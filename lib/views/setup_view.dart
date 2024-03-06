@@ -34,6 +34,7 @@ class SetupView extends StatelessWidget {
                       return Stack(
                         alignment: Alignment.bottomRight,
                         children: [
+                          //------------------Image------------------
                           controller.pickedImage == null
                               ? const CircleAvatar(
                                   backgroundColor: Colors.blueAccent,
@@ -47,6 +48,8 @@ class SetupView extends StatelessWidget {
                                   backgroundImage:
                                       FileImage(controller.pickedImage!),
                                 ),
+
+                          //-----------------------Upload Image------------------
                           InkWell(
                             onTap: () => controller.imagePicker(),
                             child: Container(
@@ -70,6 +73,8 @@ class SetupView extends StatelessWidget {
                     const SizedBox(
                       height: 20.00,
                     ),
+
+                    //----------------------Input Fields-------------------------
                     Padding(
                       padding: const EdgeInsets.only(bottom: 20.0),
                       child: Column(
@@ -97,6 +102,8 @@ class SetupView extends StatelessWidget {
                     ),
                   ],
                 ),
+
+                //-----------------------Button -------------------------
                 CustomButton(
                   title: "Save Details",
                   ontap: () async {

@@ -14,17 +14,20 @@ class SplashScreenView extends StatefulWidget {
 }
 
 class _SplashScreenViewState extends State<SplashScreenView> {
+  //grab the current user
   final user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
     super.initState();
+    //3 second break for splash screen.
     Timer(const Duration(seconds: 3), () {
       if (user == null) {
+        //Login page
         Get.offAll(() => Login());
         return;
       }
-
+      //Nav view page
       Get.offAll(() => NavView());
     });
   }

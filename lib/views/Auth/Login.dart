@@ -22,12 +22,13 @@ class Login extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Logo
+                // ------------------------Logo---------------------
                 Image.asset(
                   "assets/images/auth_logo.png",
                   width: 200,
                 ),
 
+                //-----------------Input Fields---------------------
                 Column(
                   children: [
                     CustomField(
@@ -48,10 +49,11 @@ class Login extends StatelessWidget {
                   ],
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
 
+                //------------------Login Button----------------------
                 CustomButton(
                   title: "Login",
                   ontap: () async {
@@ -74,10 +76,10 @@ class Login extends StatelessWidget {
                   },
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
-
+                //---------------Others -------------------------
                 Text(
                   "Having Trouble Logging In?",
                   style: TextStyle(color: Colors.black.withOpacity(0.5)),

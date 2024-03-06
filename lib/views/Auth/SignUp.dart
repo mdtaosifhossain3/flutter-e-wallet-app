@@ -22,16 +22,16 @@ class SignUP extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                // Logo
+                //-------------------- Logo-------------------
                 Image.asset(
                   "assets/images/auth_logo.png",
                   width: 200,
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-
+                //-----------------Input Fields---------------------
                 Column(
                   children: [
                     CustomField(
@@ -51,7 +51,7 @@ class SignUP extends StatelessWidget {
                     ),
                   ],
                 ),
-
+                //------------------Login Button----------------------
                 CustomButton(
                   title: "Sign Up",
                   ontap: () async {
@@ -78,9 +78,11 @@ class SignUP extends StatelessWidget {
                   },
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 55,
                 ),
+
+                //-----------------Others---------------
 
                 Text(
                   "Already Have an Account?",

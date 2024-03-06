@@ -22,7 +22,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          //Header
+          //------------------------Header-----------------------------------
           Container(
             height: size.height * .35,
             width: size.width,
@@ -110,6 +110,7 @@ class Home extends StatelessWidget {
                       }
                     })),
           ),
+
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(20),
@@ -117,7 +118,7 @@ class Home extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    //Buttons
+                    //---------------------------Buttons---------------------------
                     Row(
                       children: [
                         InkWell(
@@ -139,7 +140,7 @@ class Home extends StatelessWidget {
                       ],
                     )
 
-                    //Activities
+                    //------------------------Activities-----------------------------
                     ,
                     const SizedBox(
                       height: 20.00,
@@ -163,6 +164,8 @@ class Home extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
+
+                    //----------------------activity list-----------------------------
                     StreamBuilder(
                         stream: FirebaseFirestore.instance
                             .collection("history")
