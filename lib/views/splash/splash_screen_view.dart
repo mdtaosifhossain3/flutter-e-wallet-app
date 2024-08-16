@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ewallet/utils/colors.dart';
 import 'package:ewallet/views/Auth/Login.dart';
 import 'package:ewallet/views/nav/nav_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,27 +22,45 @@ class _SplashScreenViewState extends State<SplashScreenView> {
   void initState() {
     super.initState();
     //3 second break for splash screen.
-    Timer(const Duration(seconds: 3), () {
-      if (user == null) {
-        //Login page
-        Get.offAll(() => Login());
-        return;
-      }
-      //Nav view page
-      Get.offAll(() => NavView());
-    });
+    // Timer(const Duration(seconds: 3), () {
+    //   if (user == null) {
+    //     //Login page
+    //     Get.offAll(() => Login());
+    //     return;
+    //   }
+    //   //Nav view page
+    //   Get.offAll(() => NavView());
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Appcolor.primary,
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Center(
-            child: Image.asset(
-          'assets/images/auth_logo.png',
-          width: 350,
-        )),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+              Image.asset(
+                'assets/images/ttt.png',
+                width: 96,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              const Text(
+                "UpayApp",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 34,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            ])),
       ),
     );
   }
