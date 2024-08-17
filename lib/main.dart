@@ -1,5 +1,6 @@
 import 'package:ewallet/utils/colors.dart';
 import 'package:ewallet/views/splash/splash_screen_view.dart';
+import 'package:ewallet/views/welcomeView/welcome_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,16 +26,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           useMaterial3: true,
           scaffoldBackgroundColor: Appcolor.background,
-          // appBarTheme: const AppBarTheme(
-          //     backgroundColor: deepBlackColor,
-          //     elevation: 0.00,
-          //     surfaceTintColor: deepBlackColor),
+          appBarTheme: AppBarTheme(
+              backgroundColor: Appcolor.background,
+              elevation: 0.00,
+              surfaceTintColor: Appcolor.background),
           colorScheme: ColorScheme.light(
               surface: Appcolor.background, primary: Appcolor.primary),
           primaryTextTheme: TextTheme(
             headlineSmall: TextStyle(color: Appcolor.darkText),
           )),
-      home: const SplashScreenView(), //NavView()
+      home: const WelcomeView(), //NavView()
     );
   }
 }
