@@ -28,7 +28,7 @@ class WelcomeView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                        'assets/images/ttt.png',
+                        'assets/images/logo.png',
                         width: 96,
                       ),
                       const SizedBox(

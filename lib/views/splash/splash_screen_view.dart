@@ -45,7 +45,7 @@ class _SplashScreenViewState extends State<SplashScreenView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
               Image.asset(
-                'assets/images/ttt.png',
+                'assets/images/logo.png',
                 width: 96,
               ),
               const SizedBox(

@@ -1,4 +1,5 @@
 import 'package:ewallet/utils/colors.dart';
+import 'package:ewallet/views/Auth/SignUp.dart';
 import 'package:ewallet/views/splash/splash_screen_view.dart';
 import 'package:ewallet/views/welcomeView/welcome_view.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
           primaryTextTheme: TextTheme(
             headlineSmall: TextStyle(color: Appcolor.darkText),
           )),
-      home: const WelcomeView(), //NavView()
+      home: WelcomeView(), //NavView()
     );
   }
 }
