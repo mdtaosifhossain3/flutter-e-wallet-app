@@ -3,12 +3,15 @@ import 'package:ewallet/globals/customHomeItem.dart';
 import 'package:ewallet/globals/custom_list.dart';
 import 'package:ewallet/utils/colors.dart';
 import 'package:ewallet/views/activity/activity.dart';
+import 'package:ewallet/views/profileSetUpView/profile_setup_view.dart';
 import 'package:ewallet/views/sent_money/sent_money_view.dart';
-import 'package:ewallet/views/setup_view.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -26,9 +29,9 @@ class Home extends StatelessWidget {
           Container(
             height: size.height * .35,
             width: size.width,
-            decoration: const BoxDecoration(
-                color: Color(0xff114da4),
-                borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+                color: Appcolor.primary,
+                borderRadius: const BorderRadius.only(
                   bottomRight: Radius.circular(40),
                 )),
             child: Padding(
@@ -39,10 +42,61 @@ class Home extends StatelessWidget {
                         .doc(user!.email)
                         .snapshots(),
                     builder: (context, snapshot) {
-                      final userData = snapshot.data!.data();
+                      final userData = snapshot.data?.data();
 
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
+                        return Shimmer.fromColors(
+                          baseColor: Color.fromARGB(255, 190, 186, 186),
+                          highlightColor:
+                              const Color.fromARGB(255, 255, 251, 251),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: 50,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle),
+                                  ),
+                                  Container(
+                                    height: 40,
+                                    width: 40,
+                                    color: Colors.white,
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                height: 30,
+                                width: size.width * .4,
+                                color: Colors.white,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 30,
+                                    width: size.width * .7,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    height: 30,
+                                    width: double.infinity,
+                                    color: Colors.white,
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        );
                       } else {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -56,7 +110,7 @@ class Home extends StatelessWidget {
                                   width: 50,
                                 ),
                                 InkWell(
-                                  onTap: () => Get.to(() => SetupView(
+                                  onTap: () => Get.to(() => ProfileSetupView(
                                         emailAddress: FirebaseAuth
                                             .instance.currentUser!.email,
                                       )),
@@ -101,7 +155,7 @@ class Home extends StatelessWidget {
                                   style: TextStyle(
                                       color: Colors.white.withOpacity(0.8),
                                       fontSize: 18,
-                                      fontWeight: FontWeight.w100),
+                                      fontWeight: FontWeight.w300),
                                 ),
                               ],
                             )
@@ -173,21 +227,37 @@ class Home extends StatelessWidget {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
+                            return const Padding(
+                              padding: EdgeInsets.only(top: 40.0),
+                              child: Center(
+                                  child: SpinKitCircle(
+                                color: Colors.black,
+                              )),
+                            );
+                          }
+
+                          if (snapshot.hasError) {
+                            return Center(
+                                child: Text('Error: ${snapshot.error}'));
+                          }
+                          if (!snapshot.hasData ||
+                              snapshot.data!.docs.isEmpty) {
+                            return const Center(
+                                child: Text("No Transaction History Found"));
                           } else {
                             return ListView.builder(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 15.00),
                                 shrinkWrap: true,
                                 primary: false,
-                                itemCount: snapshot.data!.docs.length,
+                                itemCount: snapshot.data?.docs.length,
                                 itemBuilder: ((context, index) {
-                                  final data = snapshot.data!.docs[index];
+                                  final data = snapshot.data?.docs[index];
                                   final bool isMe =
-                                      data["Sender Email"] == user.email;
+                                      data?["Sender Email"] == user.email;
 
                                   DateTime trxTime =
-                                      (data["Time"] as Timestamp).toDate();
+                                      (data?["Time"] as Timestamp).toDate();
 
                                   final formatedTime =
                                       DateFormat.yMMMEd().format(trxTime);
@@ -195,13 +265,13 @@ class Home extends StatelessWidget {
 
                                   return isMe
                                       ? CustomList(
-                                          price: "\$${data["amount"]}",
+                                          price: "\$${data?["amount"]}",
                                           subTitle: formatedTime,
-                                          title: "${data["Receiver"]}",
+                                          title: "${data?["Receiver"]}",
                                           itemColor: Colors.red,
                                           icon: CircleAvatar(
                                             child:
-                                                Text("${data["Receiver"][0]}"),
+                                                Text("${data?["Receiver"][0]}"),
                                           ),
                                         )
                                       : const SizedBox();

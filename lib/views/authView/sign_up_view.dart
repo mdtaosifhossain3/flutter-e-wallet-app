@@ -1,16 +1,18 @@
 import 'package:ewallet/globals/custom_button.dart';
 import 'package:ewallet/globals/custom_field.dart';
-import 'package:ewallet/views/Auth/Login.dart';
-import 'package:ewallet/views/setup_view.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ewallet/services/sign_up_service.dart';
+import 'package:ewallet/views/authView/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SignUP extends StatelessWidget {
-  SignUP({Key? key}) : super(key: key);
+class SignUpView extends StatelessWidget {
+  SignUpView({Key? key}) : super(key: key);
 
   final emailCotroller = TextEditingController();
   final passwordController = TextEditingController();
+  final reEnterPasswordController = TextEditingController();
+
+  final SignUpService service = SignUpService();
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +71,7 @@ class SignUP extends StatelessWidget {
                   CustomField(
                     title: "Reenter your Password",
                     secure: true,
-                    controller: passwordController,
+                    controller: reEnterPasswordController,
                   ),
                   const SizedBox(
                     height: 20.00,
@@ -84,25 +86,19 @@ class SignUP extends StatelessWidget {
                   CustomButton(
                     title: "Sign Up",
                     ontap: () async {
-                      try {
-                        if (emailCotroller.text == "" ||
-                            passwordController.text == "") {
-                          Get.snackbar("Error", "Fields cant be empty.");
-                          return;
-                        }
-
-                        await FirebaseAuth.instance
-                            .createUserWithEmailAndPassword(
-                                email: emailCotroller.text,
-                                password: passwordController.text);
-
-                        Get.offAll(() => SetupView(
-                              emailAddress: emailCotroller.text,
-                            ));
-                        Get.snackbar("success", "Successfully Signup");
-                      } on FirebaseAuthException catch (e) {
-                        print(e);
-                        Get.snackbar("Error", e.message!);
+                      if (emailCotroller.text == '' ||
+                          passwordController.text == "" ||
+                          reEnterPasswordController.text == '') {
+                        Get.snackbar("Error", "Fields Cant be Empty");
+                      } else if (passwordController.text !=
+                          reEnterPasswordController.text) {
+                        Get.snackbar("Error", "Password is not matched");
+                      } else {
+                        service.createAccount(
+                          context: context,
+                          email: emailCotroller.text,
+                          password: passwordController.text,
+                        );
                       }
                     },
                   ),
@@ -111,7 +107,7 @@ class SignUP extends StatelessWidget {
                   ),
                   TextButton(
                       onPressed: () {
-                        Get.to(Login());
+                        Get.to(() => LoginView());
                       },
                       child: const Text(
                         "Already Have an Account?",

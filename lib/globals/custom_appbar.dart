@@ -10,8 +10,10 @@ PreferredSizeWidget customAppbar(
       title: title != null
           ? Text(
               title,
-              style:
-                  TextStyle(color: Colors.black.withOpacity(0.7), fontSize: 18),
+              style: TextStyle(
+                  color: Colors.black.withOpacity(0.7),
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
             )
           : null,
       centerTitle: true,

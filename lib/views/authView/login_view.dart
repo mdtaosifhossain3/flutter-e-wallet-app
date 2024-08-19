@@ -1,16 +1,18 @@
 import 'package:ewallet/globals/custom_button.dart';
 import 'package:ewallet/globals/custom_field.dart';
-import 'package:ewallet/views/Auth/SignUp.dart';
-import 'package:ewallet/views/nav/nav_view.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ewallet/services/login_service.dart';
+import 'package:ewallet/views/authView/sign_up_view.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Login extends StatelessWidget {
-  Login({Key? key}) : super(key: key);
+class LoginView extends StatelessWidget {
+  LoginView({Key? key}) : super(key: key);
 
   final emailCotroller = TextEditingController();
   final passwordController = TextEditingController();
+
+  final LoginService service = LoginService();
 
   @override
   Widget build(BuildContext context) {
@@ -79,21 +81,14 @@ class Login extends StatelessWidget {
                   CustomButton(
                     title: "Login",
                     ontap: () async {
-                      try {
-                        if (emailCotroller.text == "" ||
-                            passwordController.text == "") {
-                          Get.snackbar("Error", "Fields cant be empty.");
-                          return;
-                        }
-                        await FirebaseAuth.instance.signInWithEmailAndPassword(
+                      if (emailCotroller.text == "" ||
+                          passwordController.text == "") {
+                        Get.snackbar("Error", "Fields cant be empty.");
+                        return;
+                      } else {
+                        service.login(
                             email: emailCotroller.text,
                             password: passwordController.text);
-
-                        Get.offAll(() => NavView());
-                        Get.snackbar("Contgratulations!", "Successfully Login");
-                      } on FirebaseAuthException catch (e) {
-                        Get.snackbar("Error", e.message!);
-                        print(e);
                       }
                     },
                   ),
@@ -106,7 +101,7 @@ class Login extends StatelessWidget {
                   TextButton(
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return SignUP();
+                          return SignUpView();
                         }));
                       },
                       child: const Text(

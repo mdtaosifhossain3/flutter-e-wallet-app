@@ -1,4 +1,4 @@
-import 'package:ewallet/views/Auth/Login.dart';
+import 'package:ewallet/views/authView/login_view.dart';
 import 'package:ewallet/views/Home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,7 @@ class NavController extends GetxController {
           onPressed: () {
             FirebaseAuth.instance.signOut();
             Get.snackbar("Success", "Successfully Logout");
-            Get.offAll(() => Login());
+            Get.offAll(() => LoginView());
           },
           child: const Text("Logout")),
     ),
