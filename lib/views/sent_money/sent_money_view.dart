@@ -39,7 +39,7 @@ class SentMoneyView extends StatelessWidget {
                       .doc(user!.email)
                       .get();
                   print(sender.data());
-                  print("hi");
+
                   final receiverData = doc.data();
                   if (receiverData == null) {
                     Get.snackbar("Error", "User Not Exsist");

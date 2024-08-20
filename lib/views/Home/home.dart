@@ -3,6 +3,7 @@ import 'package:ewallet/globals/customHomeItem.dart';
 import 'package:ewallet/globals/custom_list.dart';
 import 'package:ewallet/utils/colors.dart';
 import 'package:ewallet/views/activity/activity.dart';
+import 'package:ewallet/views/contactsView/contacts_view.dart';
 import 'package:ewallet/views/profileSetUpView/profile_setup_view.dart';
 import 'package:ewallet/views/sent_money/sent_money_view.dart';
 
@@ -127,7 +128,7 @@ class Home extends StatelessWidget {
                                                 ? NetworkImage(
                                                     userData["Profile Pic"])
                                                 : const NetworkImage(
-                                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7j9IDpZsbq4HghrNPneZustxYupRgrt0oQ&usqp=CAU"),
+                                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu9mCh1J0Pulu5JXw8cpYkMsCiyFJavo-esQ&usqp=CAU"),
                                             fit: BoxFit.cover)),
                                   ),
                                 ),
@@ -176,7 +177,9 @@ class Home extends StatelessWidget {
                     Row(
                       children: [
                         InkWell(
-                          onTap: () => Get.to(() => SentMoneyView()),
+                          onTap: () => Get.to(() => ContactsView(
+                                appbarTitle: "Send Money",
+                              )),
                           child: const CustomHomeItem(
                             title: "Sent\nMoney",
                             icon: Icons.send,
@@ -215,9 +218,6 @@ class Home extends StatelessWidget {
                         )
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
 
                     //----------------------activity list-----------------------------
                     StreamBuilder(
@@ -246,8 +246,6 @@ class Home extends StatelessWidget {
                                 child: Text("No Transaction History Found"));
                           } else {
                             return ListView.builder(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.00),
                                 shrinkWrap: true,
                                 primary: false,
                                 itemCount: snapshot.data?.docs.length,
@@ -262,7 +260,7 @@ class Home extends StatelessWidget {
                                   final formatedTime =
                                       DateFormat.yMMMEd().format(trxTime);
                                   print(isMe);
-
+                                  //  print("${data?["Receiver"][0]}");
                                   return isMe
                                       ? CustomList(
                                           price: "\$${data?["amount"]}",
@@ -270,11 +268,10 @@ class Home extends StatelessWidget {
                                           title: "${data?["Receiver"]}",
                                           itemColor: Colors.red,
                                           icon: CircleAvatar(
-                                            child:
-                                                Text("${data?["Receiver"][0]}"),
+                                            child: Text(""),
                                           ),
                                         )
-                                      : const SizedBox();
+                                      : SizedBox();
                                 }));
                           }
                         }),

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class CustomList extends StatelessWidget {
   final String title;
-  final subTitle;
-  final price;
+  final String subTitle;
+  final String price;
   final icon;
-  final itemColor;
+  final Color? itemColor;
   final void Function()? ontap;
   const CustomList(
       {Key? key,
@@ -20,36 +20,30 @@ class CustomList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.00),
-      child: InkWell(
+    return Container(
+      margin: EdgeInsets.only(bottom: 10),
+      child: ListTile(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0), // Border radius
+        ),
+        tileColor: Colors.white,
         onTap: ontap,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8.00),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: ListTile(
-            contentPadding: EdgeInsets.zero,
-            leading: icon ??
-                CircleAvatar(
-                  child: Text(title[0]),
-                ),
-            title: Text(
-              title,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+        leading: icon ??
+            CircleAvatar(
+              child: Text(title.isNotEmpty ? title[0] : ""),
             ),
-            subtitle: Text(
-              subTitle,
-              style: TextStyle(color: Colors.black.withOpacity(.5)),
-            ),
-            trailing: Text(
-              price,
-              style:
-                  TextStyle(color: itemColor ?? Appcolor.primary, fontSize: 15),
-            ),
-          ),
+        title: Text(
+          title.isNotEmpty ? title : "No Name",
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(
+          subTitle,
+          style: TextStyle(color: Colors.black.withOpacity(.5)),
+        ),
+        trailing: Text(
+          price,
+          style: TextStyle(color: itemColor ?? Appcolor.primary, fontSize: 18),
         ),
       ),
     );

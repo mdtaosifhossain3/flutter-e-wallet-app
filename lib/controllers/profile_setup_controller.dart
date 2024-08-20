@@ -24,9 +24,14 @@ class ProfileSetupController extends GetxController {
 
       imageDownloadLnk.value = await storage.getDownloadURL();
       update();
-    } catch (e) {
+    } on SocketException catch (e) {
+      Get.snackbar("Error", "No Internet Connection!");
       // ignore: avoid_print
       return print(e);
+    } catch (e) {
+      Get.snackbar("Error", "Unexpected Error");
+      // ignore: avoid_print
+      return print("Unexpected Error:$e");
     }
   }
 }
