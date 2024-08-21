@@ -2,14 +2,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ewallet/globals/custom_appbar.dart';
 import 'package:ewallet/globals/custom_button.dart';
 import 'package:ewallet/globals/custom_field.dart';
-import 'package:ewallet/views/sent_money/success_view.dart';
+import 'package:ewallet/utils/colors.dart';
+import 'package:ewallet/views/successView/success_view.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AmountView extends StatelessWidget {
+  final String amoutViewTitle;
   final Map<String, dynamic>? receiverData;
   final Map<String, dynamic>? senderData;
-  AmountView({Key? key, this.receiverData, this.senderData}) : super(key: key);
+  AmountView(
+      {Key? key,
+      this.receiverData,
+      this.senderData,
+      required this.amoutViewTitle})
+      : super(key: key);
 
   final amountController = TextEditingController();
 
@@ -44,7 +52,8 @@ class AmountView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppbar(context: context, arrorw: true, title: "Send Money"),
+      appBar:
+          customAppbar(context: context, arrorw: true, title: amoutViewTitle),
       body: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Column(
@@ -54,9 +63,13 @@ class AmountView extends StatelessWidget {
               children: [
                 ListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text("To: "),
+                  title: const Text(
+                    "To: ",
+                    style: TextStyle(fontSize: 12),
+                  ),
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage(receiverData!["Profile Pic"]),
+                    radius: 25,
+                    child: Text(receiverData!["Email"][0]),
                   ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,11 +77,12 @@ class AmountView extends StatelessWidget {
                       Text(
                         receiverData!["Full Name"],
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+                            fontWeight: FontWeight.bold, fontSize: 15),
                       ),
                       Text(receiverData!["Email"],
-                          style:
-                              TextStyle(color: Colors.black.withOpacity(0.8)))
+                          style: TextStyle(
+                              color: Colors.black.withOpacity(0.5),
+                              fontSize: 13))
                     ],
                   ),
                 ),
@@ -80,20 +94,42 @@ class AmountView extends StatelessWidget {
                   prefixIcon: Icons.attach_money_outlined,
                   keybard: TextInputType.phone,
                   controller: amountController,
+                  focusColor: Appcolor.secondary,
+                  borderColor: Appcolor.secondary,
                 ),
-                Text("Available Balance: ${senderData!["Balance"]}")
+                const SizedBox(
+                  height: 24,
+                ),
+                Text(
+                  "Available Balance: ${senderData!["Balance"]}",
+                  style: const TextStyle(
+                    fontSize: 18,
+                  ),
+                )
               ],
             ),
             CustomButton(
               title: "Send",
+              bgColor: Appcolor.secondary,
               ontap: () {
-                final int amount = int.parse(amountController.text);
-                final int availableBalance = senderData!["Balance"];
-
-                if (amount > availableBalance) {
-                  Get.snackbar("Insuficcient", "Insuficient Funds");
+                if (amountController.text.isEmpty) {
+                  Get.snackbar("Empty", "Please Enter the amount");
                 } else {
-                  transferMoney();
+                  try {
+                    final int amount = int.parse(amountController.text);
+                    final int availableBalance = senderData!["Balance"];
+                    // Proceed with using 'number'
+                    if (amount > availableBalance) {
+                      Get.snackbar("Insuficcient", "Insuficient Funds");
+                    } else {
+                      transferMoney();
+                    }
+                  } catch (e) {
+                    Get.snackbar("Error", "Pleast try again later");
+                    if (kDebugMode) {
+                      print('Invalid number format: $e');
+                    }
+                  }
                 }
               },
             )

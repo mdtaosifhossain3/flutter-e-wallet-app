@@ -1,18 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ewallet/globals/custom_appbar.dart';
-import 'package:ewallet/globals/custom_field.dart';
 import 'package:ewallet/globals/custom_list.dart';
 import 'package:ewallet/utils/colors.dart';
-import 'package:ewallet/views/sent_money/amount_view.dart';
+import 'package:ewallet/views/amountView/amount_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class ContactsView extends StatefulWidget {
   final String appbarTitle;
-  ContactsView({super.key, required this.appbarTitle});
+  const ContactsView({super.key, required this.appbarTitle});
 
   @override
   State<ContactsView> createState() => _ContactsViewState();
@@ -24,8 +23,7 @@ class _ContactsViewState extends State<ContactsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppbar(
-          context: context, title: widget.appbarTitle, arrorw: true),
+      appBar: customAppbar(context: context, title: widget.appbarTitle),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
@@ -74,20 +72,24 @@ class _ContactsViewState extends State<ContactsView> {
                           userEmail.contains(emailController.text);
                     }).toList();
 
+                    final filteredDataList = filteredDocs!
+                        .where((item) => item["Email"] != user!.email)
+                        .toList();
+
                     return Expanded(
                         child: ListView.builder(
-                      itemCount: filteredDocs?.length,
+                      itemCount: filteredDataList.length,
                       itemBuilder: (context, index) {
-                        final data = filteredDocs?[index];
+                        final data = filteredDataList[index];
                         return CustomList(
-                          price: "\$${data?["Balance"]}",
-                          subTitle: "${data?["Email"]}",
-                          title: "${data?["Full Name"]}",
+                          price: "\$${data["Balance"]}",
+                          subTitle: "${data["Email"]}",
+                          title: "${data["Full Name"]}",
                           ontap: () async {
                             try {
                               final doc = await FirebaseFirestore.instance
                                   .collection("user")
-                                  .doc(data?["Email"])
+                                  .doc(data["Email"])
                                   .get();
                               final sender = await FirebaseFirestore.instance
                                   .collection("user")
@@ -97,10 +99,13 @@ class _ContactsViewState extends State<ContactsView> {
                               final receiverData = doc.data();
 
                               Get.off(() => AmountView(
+                                  amoutViewTitle: widget.appbarTitle,
                                   receiverData: receiverData,
                                   senderData: sender.data()));
                             } catch (e) {
-                              print("The Error:$e");
+                              if (kDebugMode) {
+                                print("The Error:$e");
+                              }
                             }
                             // try {
                             //   final doc = await FirebaseFirestore.instance

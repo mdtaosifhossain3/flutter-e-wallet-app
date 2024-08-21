@@ -24,7 +24,7 @@ class _SplashScreenViewState extends State<SplashScreenView> {
     Timer(const Duration(seconds: 3), () {
       if (user == null) {
         //Login page
-        Get.offAll(() => WelcomeView());
+        Get.offAll(() => const WelcomeView());
         return;
       }
       //Nav view page

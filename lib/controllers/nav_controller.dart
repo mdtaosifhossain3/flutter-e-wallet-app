@@ -1,6 +1,6 @@
-import 'package:ewallet/views/authView/login_view.dart';
 import 'package:ewallet/views/Home/home.dart';
 import 'package:ewallet/views/contactsView/contacts_view.dart';
+import 'package:ewallet/views/welcomeView/welcome_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +10,7 @@ class NavController extends GetxController {
 
   List<Widget> pages = [
     const Home(),
-    ContactsView(
+    const ContactsView(
       appbarTitle: "Contacts",
     ),
     const Center(
@@ -21,7 +21,7 @@ class NavController extends GetxController {
           onPressed: () {
             FirebaseAuth.instance.signOut();
             Get.snackbar("Success", "Successfully Logout");
-            Get.offAll(() => LoginView());
+            Get.offAll(() => const WelcomeView());
           },
           child: const Text("Logout")),
     ),

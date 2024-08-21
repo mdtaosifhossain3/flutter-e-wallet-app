@@ -1,9 +1,11 @@
+import 'package:ewallet/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
   final String title;
+  final Color? bgColor;
   final void Function()? ontap;
-  const CustomButton({Key? key, required this.title, this.ontap})
+  const CustomButton({Key? key, required this.title, this.ontap, this.bgColor})
       : super(key: key);
 
   @override
@@ -13,7 +15,8 @@ class CustomButton extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-            color: Colors.blueAccent, borderRadius: BorderRadius.circular(10)),
+            color: bgColor ?? Appcolor.primary,
+            borderRadius: BorderRadius.circular(10)),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 15.00),

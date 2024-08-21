@@ -5,7 +5,7 @@ class CustomList extends StatelessWidget {
   final String title;
   final String subTitle;
   final String price;
-  final icon;
+  final Widget? icon;
   final Color? itemColor;
   final void Function()? ontap;
   const CustomList(
@@ -21,14 +21,14 @@ class CustomList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       child: ListTile(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0), // Border radius
         ),
         tileColor: Colors.white,
         onTap: ontap,
-        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 10),
         leading: icon ??
             CircleAvatar(
               child: Text(title.isNotEmpty ? title[0] : ""),

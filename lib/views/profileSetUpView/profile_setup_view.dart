@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ewallet/controllers/profile_setup_controller.dart';
 import 'package:ewallet/globals/custom_appbar.dart';
@@ -10,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfileSetupView extends StatelessWidget {
-  final emailAddress;
+  final String? emailAddress;
   ProfileSetupView({Key? key, this.emailAddress}) : super(key: key);
 
   final controller = Get.put(ProfileSetupController());

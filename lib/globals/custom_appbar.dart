@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,7 +20,13 @@ PreferredSizeWidget customAppbar(
       centerTitle: true,
       leading: arrorw == true
           ? IconButton(
-              onPressed: () => Get.back(), icon: const Icon(Icons.arrow_back))
+              onPressed: () {
+                if (kDebugMode) {
+                  print("HI");
+                }
+                Get.back();
+              },
+              icon: const Icon(Icons.arrow_back))
           : null,
       actions: action);
 }

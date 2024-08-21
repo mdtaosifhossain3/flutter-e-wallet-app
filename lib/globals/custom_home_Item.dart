@@ -2,11 +2,11 @@ import 'package:ewallet/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomHomeItem extends StatelessWidget {
-  final icon;
-  final title;
+  final dynamic icon;
+  final String title;
   final void Function()? ontap;
-  final bgColor;
-  final itemColor;
+  final Color? bgColor;
+  final Color? itemColor;
   const CustomHomeItem(
       {Key? key,
       required this.icon,

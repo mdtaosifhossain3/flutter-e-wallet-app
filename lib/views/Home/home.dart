@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ewallet/globals/customHomeItem.dart';
+import 'package:ewallet/globals/custom_home_Item.dart';
 import 'package:ewallet/globals/custom_list.dart';
 import 'package:ewallet/utils/colors.dart';
-import 'package:ewallet/views/activity/activity.dart';
+import 'package:ewallet/views/activityView/activity_view.dart';
 import 'package:ewallet/views/contactsView/contacts_view.dart';
 import 'package:ewallet/views/profileSetUpView/profile_setup_view.dart';
-import 'package:ewallet/views/sent_money/sent_money_view.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -47,7 +47,7 @@ class Home extends StatelessWidget {
 
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Shimmer.fromColors(
-                          baseColor: Color.fromARGB(255, 190, 186, 186),
+                          baseColor: const Color.fromARGB(255, 190, 186, 186),
                           highlightColor:
                               const Color.fromARGB(255, 255, 251, 251),
                           child: Column(
@@ -61,7 +61,7 @@ class Home extends StatelessWidget {
                                   Container(
                                     width: 50,
                                     height: 40,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         color: Colors.white,
                                         shape: BoxShape.circle),
                                   ),
@@ -85,7 +85,7 @@ class Home extends StatelessWidget {
                                     width: size.width * .7,
                                     color: Colors.white,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                   Container(
@@ -177,7 +177,7 @@ class Home extends StatelessWidget {
                     Row(
                       children: [
                         InkWell(
-                          onTap: () => Get.to(() => ContactsView(
+                          onTap: () => Get.to(() => const ContactsView(
                                 appbarTitle: "Send Money",
                               )),
                           child: const CustomHomeItem(
@@ -188,11 +188,16 @@ class Home extends StatelessWidget {
                         const SizedBox(
                           width: 20.00,
                         ),
-                        CustomHomeItem(
-                          title: "Save\nMoney",
-                          icon: Icons.monetization_on,
-                          bgColor: Colors.white,
-                          itemColor: Appcolor.primary,
+                        InkWell(
+                          onTap: () => Get.to(() => const ContactsView(
+                                appbarTitle: "Request Money",
+                              )),
+                          child: CustomHomeItem(
+                            title: "Save\nMoney",
+                            icon: Icons.monetization_on,
+                            bgColor: Colors.white,
+                            itemColor: Appcolor.primary,
+                          ),
                         )
                       ],
                     )
@@ -259,7 +264,9 @@ class Home extends StatelessWidget {
 
                                   final formatedTime =
                                       DateFormat.yMMMEd().format(trxTime);
-                                  print(isMe);
+                                  if (kDebugMode) {
+                                    print(isMe);
+                                  }
                                   //  print("${data?["Receiver"][0]}");
                                   return isMe
                                       ? CustomList(
@@ -267,11 +274,11 @@ class Home extends StatelessWidget {
                                           subTitle: formatedTime,
                                           title: "${data?["Receiver"]}",
                                           itemColor: Colors.red,
-                                          icon: CircleAvatar(
+                                          icon: const CircleAvatar(
                                             child: Text(""),
                                           ),
                                         )
-                                      : SizedBox();
+                                      : const SizedBox();
                                 }));
                           }
                         }),
