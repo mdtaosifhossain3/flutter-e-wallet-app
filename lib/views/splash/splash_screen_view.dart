@@ -23,7 +23,7 @@ class _SplashScreenViewState extends State<SplashScreenView> {
     // 3 second break for splash screen.
     Timer(const Duration(seconds: 3), () {
       if (user == null) {
-        //Login page
+        //Welcome page
         Get.offAll(() => const WelcomeView());
         return;
       }
