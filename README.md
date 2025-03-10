@@ -1,5 +1,5 @@
 # E-Wallet App
-![image alt](https://github.com/mdtaosifhossain3/flutter-e-wallet-app/blob/1950c8ff7f395cb8e32027ad46a29262fac7f90f/e-wallet-app-mockup.jpeg)
+![image alt](https://github.com/mdtaosifhossain3/flutter-e-wallet-app/blob/8a28def5f09cac43817d406c9804a2daecb134f6/e%20wallet-mockup.png)
 
 ## Overview
 
